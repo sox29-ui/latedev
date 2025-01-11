@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="inputValueD" placeholder="D">
+    <input type="text" id="inputValueH" placeholder="H">
+    <input type="text" id="inputValueM" placeholder="M">
+    <input type="text" id="inputValueS" placeholder="S">
+    <input type="submit" value="send" onclick="send()">
+    <p id="output"></p>
+</body>
+<script>
+    function send() {
+        // أخذ القيم المدخلة من المستخدم
+        const inputValueD = document.getElementById('inputValueD').value;
+        const inputValueH = document.getElementById('inputValueH').value;
+        const inputValueM = document.getElementById('inputValueM').value;
+        const inputValueS = document.getElementById('inputValueS').value;
+
+        // إرسال القيم عبر طلب POST إلى السيرفر
+        fetch('http://localhost:4000/time', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                days: inputValueD,
+                hours: inputValueH,
+                minutes: inputValueM,
+                seconds: inputValueS
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('output').innerText = data;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+</html>
